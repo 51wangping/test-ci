@@ -36,15 +36,14 @@ jobs:
         id: pr_info
         uses: actions/github-script@v6
         with:
-          repo-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const response = await github.rest.pulls.get({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: context.issue.number
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
             });
 
-            const head_name = response.data.head.ref;
+            const head_name = response.data.head.ref ?? response.data.head.sha
 
             // 创建一个新的 pr 到 command-arguments 分支 
             const pr = await github.rest.pulls.create({
@@ -53,4 +52,4 @@ jobs:
               title: `chore: cherry pick #${context.issue.number} to ${{ needs.check_comments.outputs.command-arguments}}`,
               head: head_name,
               base: `${{ needs.check_comments.outputs.command-arguments }}`
-            });
+            })
