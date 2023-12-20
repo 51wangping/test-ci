@@ -70,10 +70,8 @@ jobs:
               repo: context.repo.repo,
               pull_number: context.issue.number
             });
-
             const head_name = response.data.head.ref ?? response.data.head.sha
             const base_name = response.data.base.ref ?? response.data.base.sha
-
             // 从 head_name 创建一个新的分支
             const branch_name = `auto-cherry-pick/${head_name}`
             await github.rest.git.createRef({
@@ -82,7 +80,6 @@ jobs:
               ref: `refs/heads/${branch_name}`,
               sha: response.data.head.sha
             })
-
             // 创建一个新的 pr 到 command-arguments 分支 
             const pr = await github.rest.pulls.create({
               owner: context.repo.owner,
