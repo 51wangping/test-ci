@@ -29,6 +29,9 @@ jobs:
     needs: check_comments
     if: ${{ needs.check_comments.outputs.command-name == 'cherry_pick' && needs.check_comments.outputs.command-arguments != '' }}
     steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: create pull request
         id: cpr
         uses: carloscastrojumo/github-cherry-pick-action@v1.0.1
@@ -38,5 +41,3 @@ jobs:
             cherry-pick
           reviewers: |
             aReviewerUser
-          title: '[cherry-pick] {old_title}'
-          body: 'Cherry picking #{old_pull_request_id} onto this branch'
