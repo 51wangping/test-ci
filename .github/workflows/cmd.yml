@@ -50,6 +50,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `chore: cherry pick #${context.issue.number} to ${{ needs.check_comments.outputs.command-arguments}}`,
-              head: head_name,  // 使用当前 PR 的源分支作为新 PR 的源分支
+              head: head_name,
               base: `${{ needs.check_comments.outputs.command-arguments }}`
             });
