@@ -21,7 +21,7 @@ jobs:
           reaction: "true"
           reaction-type: "eyes"
           allow-edits: "false"
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.PAT_TOKEN }}
 
       - name: Echo Command
         run: echo "The command was '${{ steps.command.outputs.command-name }}' with arguments '${{ steps.command.outputs.command-arguments }}'"
@@ -36,6 +36,7 @@ jobs:
         id: pr_info
         uses: actions/github-script@v6
         with:
+          repo-token: ${{ secrets.PAT_TOKEN }}
           script: |
             const response = await github.rest.pulls.get({
             owner: context.repo.owner,
@@ -53,5 +54,3 @@ jobs:
               head: head_name,
               base: `${{ needs.check_comments.outputs.command-arguments }}`
             });
-        with:
-          repo-token: ${{ secrets.PAT_TOKEN }}
