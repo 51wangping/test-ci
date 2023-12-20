@@ -38,18 +38,18 @@ jobs:
         with:
           script: |
             const response = await github.rest.pulls.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
             });
 
-            const head_name = response.data.head.ref
+            const head_name = response.data.head.ref;
 
             // 创建一个新的 pr 到 command-arguments 分支 
             const pr = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `chore: cherry pick #${context.issue.number} to ${{ needs.check_comments.outputs.command-arguments}}`,
-              head: head_name,
+              head: head_name,  // 使用当前 PR 的源分支作为新 PR 的源分支
               base: `${{ needs.check_comments.outputs.command-arguments }}`
-            })
+            });
