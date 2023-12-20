@@ -53,3 +53,5 @@ jobs:
               head: head_name,
               base: `${{ needs.check_comments.outputs.command-arguments }}`
             });
+        with:
+          repo-token: ${{ secrets.PAT_TOKEN }}
