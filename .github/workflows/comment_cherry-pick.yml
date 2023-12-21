@@ -51,5 +51,6 @@ jobs:
               repo: context.repo.repo,
               title: `chore: cherry pick #${context.issue.number} to ${{ needs.check_comments.outputs.command-arguments}}`,
               head: head_name,
-              base: `${{ needs.check_comments.outputs.command-arguments }}`
+              base: `${{ needs.check_comments.outputs.command-arguments }}`,
+              body: `cherry pick ${context.issue.html_url} to ${{ needs.check_comments.outputs.command-arguments}}`,
             })
